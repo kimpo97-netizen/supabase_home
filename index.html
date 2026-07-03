@@ -1464,7 +1464,10 @@ var PhoneRentalApp = () => {
           phone: digits
         }
       });
-      if (error) throw error;
+      if (error) {
+        setOtpError(await getFnErrorMessage(error, '인증번호 발송 중 오류가 발생했습니다.'));
+        return;
+      }
       if (!data || !data.ok) {
         setOtpError((data && data.message) || '인증번호 발송에 실패했습니다.');
       } else {
@@ -1503,7 +1506,10 @@ var PhoneRentalApp = () => {
           code: otpCode
         }
       });
-      if (error) throw error;
+      if (error) {
+        setOtpError(await getFnErrorMessage(error, '인증 확인 중 오류가 발생했습니다.'));
+        return;
+      }
       if (data && data.verified) {
         setIsPhoneVerified(true);
         setOtpError('');
@@ -1897,6 +1903,17 @@ var PhoneRentalApp = () => {
     if (raw.length < 8) return `${raw.slice(0, 3)}-${raw.slice(3)}`;
     return `${raw.slice(0, 3)}-${raw.slice(3, 7)}-${raw.slice(7, 11)}`;
   };
+  // [NEW] Edge Function 호출 실패 시, 응답 본문(JSON)에 담긴 실제 에러 메시지를 최대한 꺼내온다
+  var getFnErrorMessage = async (error, fallback) => {
+    try {
+      if (error && error.context && typeof error.context.json === 'function') {
+        var body = await error.context.clone().json();
+        if (body && body.message) return body.message;
+      }
+    } catch (_) {}
+    if (error && error.message) return error.message;
+    return fallback;
+  };
   var handleAddressSearch = () => {
     if (!window.daum || !window.daum.Postcode) {
       alert("우편번호 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
@@ -1951,7 +1968,10 @@ var PhoneRentalApp = () => {
           address
         }
       });
-      if (error) throw error;
+      if (error) {
+        setQuickFeeError(await getFnErrorMessage(error, '요금 계산 중 오류가 발생했습니다.'));
+        return;
+      }
       if (data && data.ok) {
         setQuickFeeResult({
           distanceKm: data.distanceKm,
