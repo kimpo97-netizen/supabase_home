@@ -191,12 +191,13 @@ var HOLIDAYS = {
   '2026-10-9': '한글날',
   '2026-12-25': '성탄절'
 };
+       <!-- 대여모델 마감 -->
 var BLOCKED_SCHEDULE = {
   '갤럭시 S23울트라': ['2026-4-18', '2026-4-19', '2026-2-23'],
   '갤럭시 S24울트라': ['2026-2-19', '2026-2-20', '2026-2-21', '2026-2-22', '2026-2-23'],
   '갤럭시 S25울트라': ['2026-6-7', '2026-6-9', '2026-6-10', '2026-6-8', '2026-2-23'],
-  '아이폰 17프로': ['2026-6-12', '2026-6-13', '2026-6-14', '2026-6-15', '2026-5-2', '2026-5-3'],
-  '아이폰 17프로맥스': ['2026-6-12', '2026-6-13', '2026-6-14', '2026-6-15', '2026-4-25', '2026-4-26'],
+  '아이폰 17프로': ['2026-7-3', '2026-7-4', '2026-7-5', '2026-6-15', '2026-5-2', '2026-5-3'],
+  '아이폰 17프로맥스': ['2026-7-3', '2026-7-4', '2026-7-5', '2026-6-15', '2026-4-25', '2026-4-26'],
   '갤럭시 S26울트라': ['2026-6-12', '2026-6-13', '2026-6-14', '2026-6-15', '2026-4-21']
 };
 var PREFIXES = ["시야대박", "1열기원", "금손", "얼빡샷", "홈마급", "화질감동", "우주최강", "성덕", "과몰입", "스탠딩", "돌출", "안방탈출", "내최애", "줌당기는", "손떨방", "갓벽한", "숨멎", "눈호강", "행복한", "달표면", "광클", "용병성공", "피켓팅성공", "밤샘대기", "포카교환", "덕계못탈출", "입덕요정", "덕질은장비빨", "본업천재", "은혜로운"];
@@ -1117,6 +1118,19 @@ var PhoneRentalApp = () => {
   });
   var [isSubmitting, setIsSubmitting] = useState(false);
   var [isSearching, setIsSearching] = useState(false);
+  // [NEW] 예약자 연락처 인증(SMS) 관련 상태
+  var [isPhoneVerified, setIsPhoneVerified] = useState(false);
+  var [otpSent, setOtpSent] = useState(false);
+  var [otpCode, setOtpCode] = useState('');
+  var [otpSending, setOtpSending] = useState(false);
+  var [otpVerifying, setOtpVerifying] = useState(false);
+  var [otpCooldown, setOtpCooldown] = useState(0);
+  var [otpError, setOtpError] = useState('');
+  // [NEW] 퀵서비스 예상 요금 계산 관련 상태
+  var [quickFeeAddress, setQuickFeeAddress] = useState('');
+  var [quickFeeResult, setQuickFeeResult] = useState(null);
+  var [quickFeeLoading, setQuickFeeLoading] = useState(false);
+  var [quickFeeError, setQuickFeeError] = useState('');
   var [agreements, setAgreements] = useState({
     terms: false,
     privacy: false
@@ -1187,8 +1201,8 @@ var PhoneRentalApp = () => {
   });
   var [successData, setSuccessData] = useState(null);
   var [isPhoneCheckModalOpen, setIsPhoneCheckModalOpen] = useState(false);
-  var [isPhoneCheckDisabled, setIsPhoneCheckDisabled] = useState(true);
-  var [phoneCheckCountdown, setPhoneCheckCountdown] = useState(3);
+  var [isPhoneCheckDisabled, setIsPhoneCheckDisabled] = useState(false);
+  var [phoneCheckCountdown, setPhoneCheckCountdown] = useState(0);
   var [blogModal, setBlogModal] = useState({
     open: false,
     type: null
@@ -1409,23 +1423,101 @@ var PhoneRentalApp = () => {
     }
   }, [chatMessages, isBotTyping, activeNav, qnaMode]);
   useEffect(() => {
-    var timer;
     if (isPhoneCheckModalOpen) {
-      setIsPhoneCheckDisabled(true);
-      setPhoneCheckCountdown(3);
-      timer = setInterval(() => {
-        setPhoneCheckCountdown(prev => {
-          if (prev <= 1) {
-            clearInterval(timer);
-            setIsPhoneCheckDisabled(false);
-            return 0;
-          }
-          return prev - 1;
-        });
-      }, 1000);
+      setIsPhoneCheckDisabled(false);
+      setPhoneCheckCountdown(0);
     }
-    return () => clearInterval(timer);
   }, [isPhoneCheckModalOpen]);
+  // [NEW] 인증번호 재전송 쿨다운 타이머
+  useEffect(() => {
+    if (otpCooldown <= 0) return;
+    var t = setInterval(() => {
+      setOtpCooldown(prev => {
+        if (prev <= 1) {
+          clearInterval(t);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+    return () => clearInterval(t);
+  }, [otpCooldown > 0]);
+  // [NEW] 인증번호 발송
+  var handleSendOtp = async () => {
+    var digits = userInfo.phone.replace(/[^0-9]/g, '');
+    if (digits.length !== 11) {
+      setOtpError('휴대폰 번호를 정확히 입력해주세요.');
+      return;
+    }
+    if (!sb) {
+      setOtpError('저장소 연동이 설정되지 않았습니다.');
+      return;
+    }
+    setOtpSending(true);
+    setOtpError('');
+    try {
+      var {
+        data,
+        error
+      } = await sb.functions.invoke('send-otp', {
+        body: {
+          phone: digits
+        }
+      });
+      if (error) throw error;
+      if (!data || !data.ok) {
+        setOtpError((data && data.message) || '인증번호 발송에 실패했습니다.');
+      } else {
+        setOtpSent(true);
+        setOtpCode('');
+        setOtpCooldown(60);
+        showAppToast('인증번호가 발송되었어요! 📩');
+      }
+    } catch (e) {
+      console.error('send-otp error:', e);
+      setOtpError('인증번호 발송 중 오류가 발생했습니다.');
+    } finally {
+      setOtpSending(false);
+    }
+  };
+  // [NEW] 인증번호 확인
+  var handleVerifyOtp = async () => {
+    var digits = userInfo.phone.replace(/[^0-9]/g, '');
+    if (otpCode.length !== 6) {
+      setOtpError('인증번호 6자리를 입력해주세요.');
+      return;
+    }
+    if (!sb) {
+      setOtpError('저장소 연동이 설정되지 않았습니다.');
+      return;
+    }
+    setOtpVerifying(true);
+    setOtpError('');
+    try {
+      var {
+        data,
+        error
+      } = await sb.functions.invoke('verify-otp', {
+        body: {
+          phone: digits,
+          code: otpCode
+        }
+      });
+      if (error) throw error;
+      if (data && data.verified) {
+        setIsPhoneVerified(true);
+        setOtpError('');
+        showAppToast('연락처 인증이 완료되었어요! ✅');
+      } else {
+        setOtpError((data && data.message) || '인증번호가 일치하지 않습니다.');
+      }
+    } catch (e) {
+      console.error('verify-otp error:', e);
+      setOtpError('인증 확인 중 오류가 발생했습니다.');
+    } finally {
+      setOtpVerifying(false);
+    }
+  };
   var checkRefundStatus = item => {
     if (!item) return {
       title: '예약 취소',
@@ -1566,7 +1658,9 @@ var PhoneRentalApp = () => {
   };
   var daysOfWeek = ['일', '월', '화', '수', '목', '금', '토'];
   var AVAILABLE_ONSITE_DATES = ['2025-5-5', '2025-12-25', '2026-1-1', '2026-3-', '2026-3-', '2026-3-', '2026-3-', '2026-3-', '2026-3-'];
-  var BLOCKED_POST_PICKUP_DATES = ['2026-6-12', '2026-6-13', '2026-6-14', '2026-6-10'];
+    // 택배 수령 마감
+  var BLOCKED_POST_PICKUP_DATES = ['2026-7-4', '2026-7-5', '2026-6-14', '2026-6-10'];
+    // 공연장 수령 마감
   var BLOCKED_VENUE_PICKUP_DATES = ['2026-6-12', '2026-6-13', '2026-6-10', '2026-6-15', '2026-6-8'];
   useEffect(() => {
     if (startDate && deliveryMethod === 'post') {
@@ -1824,6 +1918,54 @@ var PhoneRentalApp = () => {
         }));
       }
     }).open();
+  };
+  // [NEW] 퀵서비스 예상 요금 - 목적지 주소 검색
+  var handleQuickFeeAddressSearch = () => {
+    if (!window.daum || !window.daum.Postcode) {
+      alert("우편번호 서비스를 불러오는 중입니다. 잠시 후 다시 시도해주세요.");
+      return;
+    }
+    new daum.Postcode({
+      oncomplete: function (data) {
+        var fullAddress = data.address;
+        setQuickFeeAddress(fullAddress);
+        fetchQuickFeeEstimate(fullAddress);
+      }
+    }).open();
+  };
+  // [NEW] 퀵서비스 예상 요금 계산 (세린캠 사무실 기준 거리비례 추정)
+  var fetchQuickFeeEstimate = async address => {
+    if (!sb) {
+      setQuickFeeError('저장소 연동이 설정되지 않았습니다.');
+      return;
+    }
+    setQuickFeeLoading(true);
+    setQuickFeeError('');
+    setQuickFeeResult(null);
+    try {
+      var {
+        data,
+        error
+      } = await sb.functions.invoke('estimate-quick-fee', {
+        body: {
+          address
+        }
+      });
+      if (error) throw error;
+      if (data && data.ok) {
+        setQuickFeeResult({
+          distanceKm: data.distanceKm,
+          estimatedFee: data.estimatedFee
+        });
+      } else {
+        setQuickFeeError((data && data.message) || '요금 계산에 실패했습니다.');
+      }
+    } catch (e) {
+      console.error('estimate-quick-fee error:', e);
+      setQuickFeeError('요금 계산 중 오류가 발생했습니다.');
+    } finally {
+      setQuickFeeLoading(false);
+    }
   };
   var copyToClipboard = text => {
     var textArea = document.createElement("textarea");
@@ -5188,7 +5330,36 @@ var PhoneRentalApp = () => {
     className: "font-bold mb-1"
   }, "원하는 장소에서 수령하는 방법"), React.createElement("p", {
     className: "mb-1 text-blue-500"
-  }, "주로 긴급으로 필요하신분들 추천!"), React.createElement("p", null, "👉 지역마다 상이하지만, 평균 2만원")), deliveryMethod === 'venue' && React.createElement(React.Fragment, null, React.createElement("p", {
+  }, "주로 긴급으로 필요하신분들 추천!"), React.createElement("p", {
+    className: "mb-2"
+  }, "👉 지역마다 상이하지만, 평균 2만원"), React.createElement("div", {
+    className: "bg-white rounded-xl p-3 border border-blue-100"
+  }, React.createElement("p", {
+    className: "text-[11px] font-bold text-gray-500 mb-1.5"
+  }, "📍 세린캠 사무실 기준 예상 요금 확인"), React.createElement("button", {
+    type: "button",
+    onClick: handleQuickFeeAddressSearch,
+    className: "w-full flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2.5 text-xs text-left hover:bg-gray-100 transition-colors"
+  }, React.createElement("span", {
+    className: quickFeeAddress ? "text-gray-700 truncate mr-2" : "text-gray-400"
+  }, quickFeeAddress || "받으실 주소 검색하기"), React.createElement(Icons.MapPin, {
+    size: 14,
+    className: "text-blue-400 shrink-0"
+  })), quickFeeLoading && React.createElement("p", {
+    className: "text-[11px] text-gray-400 mt-2"
+  }, "예상 요금을 계산하고 있어요..."), quickFeeError && React.createElement("p", {
+    className: "text-[11px] text-red-500 font-bold mt-2"
+  }, quickFeeError), quickFeeResult && React.createElement("div", {
+    className: "mt-2 bg-sky-50 rounded-lg px-3 py-2.5 border border-sky-100"
+  }, React.createElement("div", {
+    className: "flex items-center justify-between"
+  }, React.createElement("span", {
+    className: "text-[11px] text-gray-500"
+  }, "사무실 기준 약 ", quickFeeResult.distanceKm, "km"), React.createElement("span", {
+    className: "text-sm font-extrabold text-sky-600"
+  }, "약 ", quickFeeResult.estimatedFee.toLocaleString(), "원")), React.createElement("p", {
+    className: "text-[10px] text-gray-400 mt-1"
+  }, "⚠️ 거리 기반 추정 금액으로 실제 카카오T퀵 요금과 다를 수 있어요.")))), deliveryMethod === 'venue' && React.createElement(React.Fragment, null, React.createElement("p", {
     className: "font-bold mb-1"
   }, "공연장 근처에서 수령하는 방법"), React.createElement("p", null, "👉 보통 사운드체크 1시간~30분전, 공연시작 2~3시간 전 진행"), isRestrictedVenueDate && React.createElement("p", {
     className: "text-red-500 font-bold mt-1.5 text-[11px] bg-white px-2 py-1 rounded-lg inline-block shadow-sm"
@@ -5462,11 +5633,50 @@ var PhoneRentalApp = () => {
     className: "w-full p-3 bg-transparent outline-none text-gray-800",
     placeholder: "010-0000-0000",
     value: userInfo.phone,
-    onChange: e => setUserInfo({
-      ...userInfo,
-      phone: formatPhone(e.target.value)
-    })
-  }))), React.createElement("div", null, React.createElement("label", {
+    onChange: e => {
+      var newPhone = formatPhone(e.target.value);
+      setUserInfo({
+        ...userInfo,
+        phone: newPhone
+      });
+      if (isPhoneVerified || otpSent) {
+        setIsPhoneVerified(false);
+        setOtpSent(false);
+        setOtpCode('');
+        setOtpCooldown(0);
+        setOtpError('');
+      }
+    }
+  }), isPhoneVerified ? React.createElement("span", {
+    className: "flex items-center gap-1 text-[11px] font-bold text-green-500 pr-1 whitespace-nowrap"
+  }, React.createElement(Icons.CheckCircle, {
+    size: 14
+  }), "인증완료") : React.createElement("button", {
+    type: "button",
+    disabled: userInfo.phone.replace(/[^0-9]/g, '').length !== 11 || otpSending || otpCooldown > 0,
+    onClick: handleSendOtp,
+    className: `shrink-0 text-[11px] font-bold px-2.5 py-1.5 rounded-lg transition-all whitespace-nowrap ${userInfo.phone.replace(/[^0-9]/g, '').length !== 11 || otpSending || otpCooldown > 0 ? 'bg-gray-100 text-gray-400' : 'bg-blue-400 text-white hover:bg-blue-500 active:scale-95'}`
+  }, otpSending ? '발송중...' : otpCooldown > 0 ? `재전송 ${otpCooldown}초` : otpSent ? '재전송' : '인증번호 받기'))), !isPhoneVerified && otpSent && React.createElement("div", {
+    className: "flex items-center gap-2 mt-2 animate-fade-in"
+  }, React.createElement("input", {
+    type: "text",
+    inputMode: "numeric",
+    maxLength: 6,
+    className: "flex-1 p-3 bg-gray-50 rounded-xl outline-none text-gray-800",
+    placeholder: "인증번호 6자리",
+    value: otpCode,
+    onChange: e => {
+      setOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6));
+      setOtpError('');
+    }
+  }), React.createElement("button", {
+    type: "button",
+    disabled: otpCode.length !== 6 || otpVerifying,
+    onClick: handleVerifyOtp,
+    className: `shrink-0 text-sm font-bold px-4 py-3 rounded-xl transition-all ${otpCode.length !== 6 || otpVerifying ? 'bg-gray-100 text-gray-400' : 'bg-gray-800 text-white hover:bg-gray-900 active:scale-95'}`
+  }, otpVerifying ? '확인중...' : '확인')), otpError && React.createElement("p", {
+    className: "text-[11px] text-red-500 font-bold mt-1.5 ml-1"
+  }, otpError), React.createElement("div", null, React.createElement("label", {
     className: "text-xs font-bold text-gray-500 ml-1"
   }, "일정명"), React.createElement("div", {
     className: "flex items-center bg-gray-50 rounded-xl px-3 mt-1"
@@ -5853,6 +6063,10 @@ var PhoneRentalApp = () => {
       if (step === 3) {
         if (!userInfo.name || !userInfo.phone || !userInfo.scheduleName || !userInfo.account || !userInfo.address || !userInfo.detailAddress) {
           showAppToast(t('errInfo'));
+          return;
+        }
+        if (!isPhoneVerified) {
+          showAppToast('연락처 인증을 완료해주세요! 📱');
           return;
         }
         if (!agreements.terms || !agreements.privacy) {
