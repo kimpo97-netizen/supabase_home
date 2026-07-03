@@ -6177,11 +6177,11 @@ var PhoneRentalApp = () => {
     className: "text-xs text-gray-500"
   }, "⚠️ 배송 지연이 예상되는 경우, 공연장 수령으로 변경될 수 있어요.")), deliveryConfirmPopup === 'quick' && React.createElement(React.Fragment, null, React.createElement("p", {
     className: "font-bold text-sky-600"
-  }, "⚡ 주문 후 6시간 이내 도착예정"), React.createElement("p", null, "카카오T퀵으로 원하시는 곳에서 바로 받아보세요!"), React.createElement("div", {
+  }, "⚡ 예약 후 6시간 이내 도착예정"), React.createElement("p", null, "카카오T퀵으로 원하시는 곳에서 바로 받아보세요!"), React.createElement("div", {
     className: "bg-white rounded-xl p-3 border border-sky-100 mt-1"
   }, React.createElement("p", {
     className: "text-[11px] font-bold text-gray-500 mb-1.5"
-  }, "📍 세린캠 사무실 기준 예상 요금 확인"), React.createElement("button", {
+  }, "📍 카카오T퀵 비용 미리보기"), React.createElement("button", {
     type: "button",
     onClick: handleQuickFeeAddressSearch,
     className: "w-full flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2.5 text-xs text-left hover:bg-gray-100 transition-colors"
@@ -6206,7 +6206,9 @@ var PhoneRentalApp = () => {
     className: "text-[10px] text-gray-400 mt-1"
   }, "⚠️ 거리 기반 추정 금액으로 실제 카카오T퀵 요금과 다를 수 있어요."))), !quickFeeResult && React.createElement("p", {
     className: "text-[11px] text-gray-400"
-  }, "👆 주소를 검색하고 예상 요금까지 확인하셔야 다음으로 진행할 수 있어요.")), deliveryConfirmPopup === 'venue' && React.createElement(React.Fragment, null, React.createElement("p", null, "공연장 주변에서 수령할 수 있어요."), React.createElement("p", null, "보통 사운드체크 1시간 전 또는 공연시작 2~3시간 전에 진행해요."), React.createElement("p", {
+  }, "👆 주소를 검색하고 예상 요금까지 확인하셔야 다음으로 진행할 수 있어요.")), deliveryConfirmPopup === 'venue' && React.createElement(React.Fragment, null, startDate && React.createElement("p", {
+    className: "font-bold text-sky-600"
+  }, "📅 ", startDate.getMonth() + 1, "/", startDate.getDate(), "(", daysOfWeek[startDate.getDay()], ") 공연장 픽업"), React.createElement("p", null, "공연장 주변에서 수령할 수 있어요."), React.createElement("p", null, "보통 사운드체크 1시간 전 또는 공연시작 2~3시간 전에 진행해요."), React.createElement("p", {
     className: "text-xs text-gray-500"
   }, "🕐 자세한 안내는 전날 밤 ~ 당일 오전 중 드려요.")), deliveryConfirmPopup === 'office' && React.createElement(React.Fragment, null, startDate && React.createElement("p", {
     className: "font-bold text-sky-600"
@@ -6218,9 +6220,14 @@ var PhoneRentalApp = () => {
   }, "네이버 지도로 위치 보기 ", React.createElement(Icons.MapPin, {
     size: 12
   })))), React.createElement("button", {
-    disabled: deliveryConfirmPopup === 'quick' && !quickFeeResult,
-    onClick: () => setDeliveryConfirmPopup(null),
-    className: `w-full py-3.5 rounded-xl font-bold shadow-md transition-all text-sm ${deliveryConfirmPopup === 'quick' && !quickFeeResult ? 'bg-gray-200 text-gray-400 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-600 active:scale-95'}`
+    onClick: () => {
+      if (deliveryConfirmPopup === 'quick' && !quickFeeResult) {
+        setQuickFeeError('퀵 비용을 먼저 확인해주세요! 💸');
+        return;
+      }
+      setDeliveryConfirmPopup(null);
+    },
+    className: "w-full py-3.5 rounded-xl font-bold shadow-md transition-all text-sm bg-blue-500 text-white hover:bg-blue-600 active:scale-95"
   }, "확인했어요"))), returnConfirmPopup && React.createElement("div", {
     className: "fixed inset-0 z-[100] bg-black/50 flex items-center justify-center p-4 animate-fade-in"
   }, React.createElement("div", {
@@ -6239,7 +6246,12 @@ var PhoneRentalApp = () => {
     className: "text-lg font-bold text-gray-800 mb-3 text-center"
   }, returnConfirmPopup === 'post' ? '우체국택배 반납' : returnConfirmPopup === 'office' ? '사무실 반납' : returnConfirmPopup === 'sameday' ? '당일 반납' : '공연장 반납'), React.createElement("div", {
     className: "bg-rose-50 rounded-2xl p-4 text-sm text-gray-700 leading-relaxed space-y-2 mb-5"
-  }, returnConfirmPopup === 'post' && React.createElement(React.Fragment, null, React.createElement("p", null, "우체국택배를 이용하여 반납해주세요."), React.createElement("p", {
+  }, returnConfirmPopup === 'post' && React.createElement(React.Fragment, null, endDate && (() => {
+    var d = getReturnDate(endDate, 'post');
+    return React.createElement("p", {
+      className: "font-bold text-rose-500"
+    }, "📅 ", d.getMonth() + 1, "/", d.getDate(), "(", daysOfWeek[d.getDay()], ") 반납");
+  })(), React.createElement("p", null, "우체국택배를 이용하여 반납해주세요."), React.createElement("p", {
     className: "text-xs text-rose-500"
   }, "⚠️ 다른 택배(GS25, 편의점택배 등)는 배송지연·파손·분실 위험이 커 이용 불가하며, 사전 협의 없이 이용 시 계약위반 비용이 청구될 수 있어요."), React.createElement("p", {
     className: "text-xs text-gray-500"
