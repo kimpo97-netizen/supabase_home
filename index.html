@@ -5350,13 +5350,13 @@ var PhoneRentalApp = () => {
     className: "font-bold mb-1"
   }, "원하는 장소에서 수령하는 방법"), React.createElement("p", {
     className: "mb-1 text-blue-500"
-  }, "주로 긴급으로 필요하신분들 추천!"), React.createElement("p", {
+  }, "긴급으로 필요하신분들 추천!"), React.createElement("p", {
     className: "mb-2"
-  }, "👉 지역마다 상이하지만, 평균 2만원"), React.createElement("div", {
+  }, ""), React.createElement("div", {
     className: "bg-white rounded-xl p-3 border border-blue-100"
   }, React.createElement("p", {
     className: "text-[11px] font-bold text-gray-500 mb-1.5"
-  }, "📍 세린캠 사무실 기준 예상 요금 확인"), React.createElement("button", {
+  }, "📍 카카오T퀵 예상 요금 확인"), React.createElement("button", {
     type: "button",
     onClick: handleQuickFeeAddressSearch,
     className: "w-full flex items-center justify-between bg-gray-50 rounded-lg px-3 py-2.5 text-xs text-left hover:bg-gray-100 transition-colors"
@@ -5379,7 +5379,7 @@ var PhoneRentalApp = () => {
     className: "text-sm font-extrabold text-sky-600"
   }, "약 ", quickFeeResult.estimatedFee.toLocaleString(), "원")), React.createElement("p", {
     className: "text-[10px] text-gray-400 mt-1"
-  }, "⚠️ 거리 기반 추정 금액으로 실제 카카오T퀵 요금과 다를 수 있어요.")))), deliveryMethod === 'venue' && React.createElement(React.Fragment, null, React.createElement("p", {
+  }, "⚠️ 거리 기반 추정 금액으로 실제 카카오T퀵 요금과 다를 수 있어 예약 후 상세 요금 안내드립니다.")))), deliveryMethod === 'venue' && React.createElement(React.Fragment, null, React.createElement("p", {
     className: "font-bold mb-1"
   }, "공연장 근처에서 수령하는 방법"), React.createElement("p", null, "👉 보통 사운드체크 1시간~30분전, 공연시작 2~3시간 전 진행"), isRestrictedVenueDate && React.createElement("p", {
     className: "text-red-500 font-bold mt-1.5 text-[11px] bg-white px-2 py-1 rounded-lg inline-block shadow-sm"
