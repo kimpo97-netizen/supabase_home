@@ -5869,7 +5869,24 @@ var PhoneRentalApp = () => {
     className: `text-[10px] flex items-center justify-center gap-1 z-10 relative transition-colors ${userInfo.address === v.name ? 'text-blue-400' : 'text-gray-400 group-hover:text-blue-500'}`
   }, React.createElement(Icons.MapPin, {
     size: 10
-  }), " ", v.info ? '자세히 보기' : '위치보기'))))), React.createElement("input", {
+  }), " ", v.info ? '자세히 보기' : '위치보기'))))), (() => {
+    // [NEW] 관리자가 이 날짜에 공연장 화이트리스트(venue_available_dates)를 지정해두었으면 안내 문구 표시
+    var whitelistNotice = null;
+    if (startDate && VENUE_AVAILABLE_DATES) {
+      var y = startDate.getFullYear();
+      var m = startDate.getMonth() + 1;
+      var d = startDate.getDate();
+      var wk = daysOfWeek[startDate.getDay()];
+      var key = `${y}-${m}-${d}`;
+      var allowedForDay = VENUE_AVAILABLE_DATES[key];
+      if (allowedForDay && allowedForDay.length > 0) {
+        whitelistNotice = `${m}월 ${d}일 (${wk})은 위 공연장에서만 수령 가능해요.`;
+      }
+    }
+    return whitelistNotice ? React.createElement("p", {
+      className: "text-[11px] text-blue-500 font-bold mb-2 ml-1 leading-snug"
+    }, "📍 ", whitelistNotice) : null;
+  })(), React.createElement("input", {
     type: "text",
     className: `w-full p-2.5 bg-white border border-gray-200 rounded-lg outline-none text-sm transition-colors ${isRestrictedVenueDate ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'text-gray-800 focus:border-blue-300 placeholder-gray-300'}`,
     placeholder: isRestrictedVenueDate ? "해당 일자는 직접 입력이 불가능해요!" : "원하시는 공연장이 없으면 직접 입력해주세요!",
