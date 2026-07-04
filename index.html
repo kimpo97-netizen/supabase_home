@@ -1459,17 +1459,25 @@ var PhoneRentalApp = () => {
     var key = `${y}-${m}-${d}`;
     return (VENUE_BLOCKED_DATES[venueName] || []).includes(key);
   };
-  var VENUE_AVAILABLE_DATES = (remoteSettings && remoteSettings.venue_available_dates) || null; // [NEW] 날짜별 공연장 화이트리스트 (관리자 설정)
-  var isVenueAllowedOnStartDate = venueName => { // [NEW] 화이트리스트가 있으면 그 날짜에 지정된 공연장만 허용 (기본은 전부 불가)
-    if (!VENUE_AVAILABLE_DATES) return true; // 관리자가 아직 한 번도 설정 안 했으면 기존처럼 전부 허용 (안전장치)
-    if (!startDate) return true;
+  var VENUE_AVAILABLE_DATES = (remoteSettings && remoteSettings.venue_available_dates) || null; // [NEW] 날짜별 공연장 화이트리스트 (관리자 설정)  { "y-m-d": { venues:[...], hours:"14:00~20:00" } }
+  var getVenueDateEntry = () => { // [NEW] 선택한 대여시작일의 화이트리스트 항목( {venues, hours} ) 반환
+    if (!VENUE_AVAILABLE_DATES || !startDate) return null;
     var y = startDate.getFullYear();
     var m = startDate.getMonth() + 1;
     var d = startDate.getDate();
     var key = `${y}-${m}-${d}`;
-    var allowed = VENUE_AVAILABLE_DATES[key];
-    if (!allowed) return false; // 이 날짜에 대한 설정이 없으면 기본값: 전부 불가
-    return allowed.includes(venueName);
+    return VENUE_AVAILABLE_DATES[key] || null;
+  };
+  var hasVenueWhitelistNow = () => { // [NEW] 현재 선택된 대여시작일에 공연장 화이트리스트가 지정되어 있는지
+    var e = getVenueDateEntry();
+    return !!(e && e.venues && e.venues.length > 0);
+  };
+  var isVenueAllowedOnStartDate = venueName => { // [NEW] 화이트리스트가 있으면 그 날짜에 지정된 공연장만 허용 (기본은 전부 불가)
+    if (!VENUE_AVAILABLE_DATES) return true; // 관리자가 아직 한 번도 설정 안 했으면 기존처럼 전부 허용 (안전장치)
+    if (!startDate) return true;
+    var entry = getVenueDateEntry();
+    if (!entry || !entry.venues) return false; // 이 날짜에 대한 설정이 없으면 기본값: 전부 불가
+    return entry.venues.includes(venueName);
   };
   var venueList = (() => {
     var result = {};
@@ -5755,8 +5763,8 @@ var PhoneRentalApp = () => {
     type: "text",
     inputMode: "numeric",
     maxLength: 6,
-    className: "flex-1 p-3 bg-gray-50 rounded-xl outline-none text-gray-800",
-    placeholder: "인증번호 6자리",
+    className: "w-28 shrink-0 p-3 bg-gray-50 rounded-xl outline-none text-gray-800 text-center text-lg font-bold tracking-[0.3em]",
+    placeholder: "· · · · · ·",
     value: otpCode,
     onChange: e => {
       setOtpCode(e.target.value.replace(/[^0-9]/g, '').slice(0, 6));
@@ -5766,7 +5774,7 @@ var PhoneRentalApp = () => {
     type: "button",
     disabled: otpCode.length !== 6 || otpVerifying,
     onClick: handleVerifyOtp,
-    className: `shrink-0 text-sm font-bold px-4 py-3 rounded-xl transition-all ${otpCode.length !== 6 || otpVerifying ? 'bg-gray-100 text-gray-400' : 'bg-gray-800 text-white hover:bg-gray-900 active:scale-95'}`
+    className: `flex-1 min-w-0 text-sm font-bold px-3 py-3 rounded-xl transition-all ${otpCode.length !== 6 || otpVerifying ? 'bg-gray-100 text-gray-400' : 'bg-gray-800 text-white hover:bg-gray-900 active:scale-95'}`
   }, otpVerifying ? '확인중...' : '확인')), otpError && React.createElement("p", {
     className: "text-[11px] text-red-500 font-bold mt-1.5 ml-1"
   }, otpError), React.createElement("div", null, React.createElement("label", {
@@ -5870,23 +5878,19 @@ var PhoneRentalApp = () => {
   }, React.createElement(Icons.MapPin, {
     size: 10
   }), " ", v.info ? '자세히 보기' : '위치보기'))))), (() => {
-    // [NEW] 관리자가 이 날짜에 공연장 화이트리스트(venue_available_dates)를 지정해두었으면 안내 문구 표시
-    var whitelistNotice = null;
-    if (startDate && VENUE_AVAILABLE_DATES) {
-      var y = startDate.getFullYear();
-      var m = startDate.getMonth() + 1;
-      var d = startDate.getDate();
-      var wk = daysOfWeek[startDate.getDay()];
-      var key = `${y}-${m}-${d}`;
-      var allowedForDay = VENUE_AVAILABLE_DATES[key];
-      if (allowedForDay && allowedForDay.length > 0) {
-        whitelistNotice = `${m}월 ${d}일 (${wk})은 위 공연장에서만 수령 가능해요.`;
-      }
-    }
-    return whitelistNotice ? React.createElement("p", {
-      className: "text-[11px] text-blue-500 font-bold mb-2 ml-1 leading-snug"
-    }, "📍 ", whitelistNotice) : null;
-  })(), React.createElement("input", {
+    // [NEW] 관리자가 이 날짜에 공연장 화이트리스트(venue_available_dates)를 지정해두었으면 안내 문구 표시 (운영시간 굵게)
+    var entry = getVenueDateEntry();
+    var hasWhitelist = !!(entry && entry.venues && entry.venues.length > 0);
+    if (!startDate || !hasWhitelist) return null;
+    var m = startDate.getMonth() + 1;
+    var d = startDate.getDate();
+    var wk = daysOfWeek[startDate.getDay()];
+    return React.createElement("p", {
+      className: "text-[12px] text-blue-600 font-bold mb-2 ml-1 leading-snug"
+    }, "📍 ", `${m}월 ${d}일 (${wk}) 공연장 픽업 가능해요`, entry.hours ? React.createElement("span", null, " · 운영시간 ", React.createElement("strong", {
+      className: "font-extrabold"
+    }, entry.hours)) : null);
+  })(), !hasVenueWhitelistNow() && React.createElement("input", {
     type: "text",
     className: `w-full p-2.5 bg-white border border-gray-200 rounded-lg outline-none text-sm transition-colors ${isRestrictedVenueDate ? 'bg-gray-100 text-gray-400 cursor-not-allowed' : 'text-gray-800 focus:border-blue-300 placeholder-gray-300'}`,
     placeholder: isRestrictedVenueDate ? "해당 일자는 직접 입력이 불가능해요!" : "원하시는 공연장이 없으면 직접 입력해주세요!",
