@@ -10,5 +10,5 @@
 
 window.SERINCAM_CONFIG = {
   SUPABASE_URL: "https://ttydslhchpzaehuphnkz.supabase.co",        // 예) https://ttydslhchpzaehuphnkz.supabase.co
-  SUPABASE_ANON_KEY: "sb_publishable_pcA2VrxMYHKTSPYwfb4C7w_9RZb0z_Q"  // sb_publishable_... (홈페이지와 동일)
+  SUPABASE_ANON_KEY: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InR0eWRzbGhjaHB6YWVodXBobmt6Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODI3Mjc2NDgsImV4cCI6MjA5ODMwMzY0OH0.7y8hqlXA1VvHl5egp9kjhFXs3O3TYU2xFbGb_C1uHTQ"  // sb_publishable_... (홈페이지와 동일)
 };
