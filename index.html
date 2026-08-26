@@ -393,7 +393,18 @@
 
                                 <!-- 롤 작업 선택 시 -->
                                 <div id="postRollWork" class="space-y-4" style="display: none;">
-                                    <div class="flex flex-col gap-2">
+                                    <div class="flex gap-2 items-end">
+                                        <div class="flex flex-col gap-2 flex-1">
+                                            <label class="text-[14px] font-semibold text-toss-sub">길이 (m)</label>
+                                            <div class="relative">
+                                                <input type="number" id="rollLengthM" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 pr-10 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                                <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-toss-placeholder pointer-events-none">m</span>
+                                            </div>
+                                        </div>
+                                        <button type="button" id="noEquipmentToggleBtn" class="flex-shrink-0 px-4 py-4 rounded-xl text-[14px] font-semibold border border-toss-border text-toss-sub whitespace-nowrap active:bg-toss-bg transition-colors">후가공 없음</button>
+                                    </div>
+
+                                    <div class="flex flex-col gap-2" id="qtexEquipmentSection">
                                         <label class="text-[14px] font-semibold text-toss-sub">사용 기기 (큐텍스)</label>
                                         <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
                                             <button type="button" class="qtex-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="큐텍스 1호">큐텍스 1호</button>
@@ -402,17 +413,17 @@
                                         <input type="hidden" id="qtexSelection" value="큐텍스 1호">
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-3 mt-3">
+                                    <div class="grid grid-cols-2 gap-3 mt-3" id="jigDetailsGrid">
                                         <div class="flex flex-col gap-2">
                                             <label class="text-[14px] font-semibold text-toss-sub">지그크기</label>
                                             <input type="text" id="jigSize" placeholder="입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">길이설정</label>
+                                            <label class="text-[14px] font-semibold text-toss-sub">설정길이</label>
                                             <input type="number" id="jigLengthSetting" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">위치</label>
+                                            <label class="text-[14px] font-semibold text-toss-sub">가감속</label>
                                             <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
                                                 <button type="button" class="jig-pos-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="상">상</button>
                                                 <button type="button" class="jig-pos-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="중">중</button>
@@ -421,11 +432,11 @@
                                             <input type="hidden" id="jigPosition" value="상">
                                         </div>
                                         <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">퍼센트 (%)</label>
+                                            <label class="text-[14px] font-semibold text-toss-sub">피딩속도</label>
                                             <input type="number" id="jigPercent" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2 col-span-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">누름</label>
+                                            <label class="text-[14px] font-semibold text-toss-sub">하강위치</label>
                                             <input type="number" id="jigPress" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                     </div>
@@ -2153,11 +2164,12 @@
                         sections += `
                             <div class="grid grid-cols-2 gap-3 mt-3">
                                 ${detailField('지그크기', p.지그크기)}
-                                ${detailField('길이설정', p.길이설정)}
-                                ${detailField('위치', p.위치)}
-                                ${detailField('퍼센트 (%)', p.퍼센트)}
+                                ${detailField('설정길이', p.길이설정)}
+                                ${detailField('가감속', p.위치)}
+                                ${detailField('피딩속도', p.퍼센트)}
                             </div>
-                            <div class="grid grid-cols-1 gap-3">${detailField('누름', p.누름)}</div>
+                            <div class="grid grid-cols-1 gap-3">${detailField('하강위치', p.누름)}</div>
+                            <div class="grid grid-cols-1 gap-3">${detailField('길이 (m)', p.길이m)}</div>
                         `;
                     } else if (p.type === '직접 잘라요') {
                         sections += detailField('자른 길이 (mm)', p.자른길이);
@@ -2476,6 +2488,29 @@
             });
         });
 
+        const noEquipmentToggleBtn = document.getElementById('noEquipmentToggleBtn');
+        const qtexEquipmentSection = document.getElementById('qtexEquipmentSection');
+        const jigDetailsGrid = document.getElementById('jigDetailsGrid');
+        let noEquipmentUsed = false;
+        function updateNoEquipmentUI() {
+            qtexEquipmentSection.classList.toggle('hidden', noEquipmentUsed);
+            jigDetailsGrid.classList.toggle('hidden', noEquipmentUsed);
+            noEquipmentToggleBtn.classList.toggle('bg-toss-text', noEquipmentUsed);
+            noEquipmentToggleBtn.classList.toggle('text-white', noEquipmentUsed);
+            noEquipmentToggleBtn.classList.toggle('border-toss-border', !noEquipmentUsed);
+            noEquipmentToggleBtn.classList.toggle('text-toss-sub', !noEquipmentUsed);
+            if (noEquipmentUsed) {
+                qtexSelectionInput.value = '';
+            } else if (!qtexSelectionInput.value) {
+                const activeQtexBtn = document.querySelector('.qtex-btn.bg-white') || qtexBtns[0];
+                qtexSelectionInput.value = activeQtexBtn ? activeQtexBtn.getAttribute('data-value') : '큐텍스 1호';
+            }
+        }
+        noEquipmentToggleBtn.addEventListener('click', () => {
+            noEquipmentUsed = !noEquipmentUsed;
+            updateNoEquipmentUI();
+        });
+
         const extruderTabs = document.querySelectorAll('.extruder-segment-btn');
         const extruderInput = document.getElementById('extruderType');
         
@@ -2580,7 +2615,7 @@
              'lengthVal', 'shrinkageRate', 'dimensionValue', 'extrudeTemp', 'extrudeSpeed',
              'feedSpeed', 'feedDecel', 'feedReverse', 'feedSingleSpeed',
              'cutSetLength', 'cutBackSpeed', 'cutRollerPress', 'cutHotHandling',
-             'jigSize', 'jigLengthSetting', 'jigPercent', 'jigPress', 'manualCutLength'].forEach(id => {
+             'jigSize', 'jigLengthSetting', 'jigPercent', 'jigPress', 'rollLengthM', 'manualCutLength'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = '';
             });
@@ -2598,6 +2633,8 @@
                 const btn = document.querySelector(`${selector}[data-value="${value}"]`);
                 if (btn) btn.click();
             });
+            noEquipmentUsed = false;
+            updateNoEquipmentUI();
 
             resetBlend('material', 0);
             resetBlend('additive', 0);
@@ -2662,11 +2699,14 @@
                     setVal('cutHotHandling', post.뜨거울때);
                 } else if (postType === '롤 작업') {
                     selectSegment('.qtex-btn', post.큐텍스 || '큐텍스 1호');
+                    noEquipmentUsed = !post.큐텍스;
+                    updateNoEquipmentUI();
                     setVal('jigSize', post.지그크기);
                     setVal('jigLengthSetting', post.길이설정);
                     selectSegment('.jig-pos-btn', post.위치 || '상');
                     setVal('jigPercent', post.퍼센트);
                     setVal('jigPress', post.누름);
+                    setVal('rollLengthM', post.길이m);
                 } else if (postType === '직접 잘라요') {
                     setVal('manualCutLength', post.자른길이);
                 }
@@ -2753,7 +2793,8 @@
                         길이설정: fieldVal('jigLengthSetting'),
                         위치: document.getElementById('jigPosition').value,
                         퍼센트: fieldVal('jigPercent'),
-                        누름: fieldVal('jigPress')
+                        누름: fieldVal('jigPress'),
+                        길이m: fieldVal('rollLengthM')
                     });
                 } else if (postProcessStep === '직접 잘라요') {
                     Object.assign(postDetail, {
