@@ -96,16 +96,6 @@
             cursor: pointer;
         }
 
-        /* 숫자 입력칸 스피너 제거 (가운데 정렬 쏠림 방지) */
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-        
         .filter-chip { transition: all 0.2s ease-in-out; }
     </style>
 </head>
@@ -255,11 +245,11 @@
                                 <div class="grid grid-cols-2 gap-1.5">
                                     <div class="flex flex-col items-center justify-center gap-1.5 w-full">
                                         <label class="text-[11px] font-semibold text-toss-sub text-center tracking-tighter whitespace-nowrap w-full block">내경</label>
-                                        <input type="number" id="moldInnerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                        <input type="text" id="moldInnerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                     </div>
                                     <div class="flex flex-col items-center justify-center gap-1.5 w-full">
                                         <label class="text-[11px] font-semibold text-toss-sub text-center tracking-tighter whitespace-nowrap w-full block">외경</label>
-                                        <input type="number" id="moldOuterDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                        <input type="text" id="moldOuterDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                     </div>
                                 </div>
                             </div>
@@ -268,15 +258,15 @@
                                 <div class="grid grid-cols-3 gap-1.5">
                                     <div class="flex flex-col items-center justify-center gap-1.5 w-full">
                                         <label class="text-[11px] font-semibold text-toss-sub text-center tracking-tighter whitespace-nowrap w-full block">내경</label>
-                                        <input type="number" id="innerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                        <input type="text" id="innerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                     </div>
                                     <div class="flex flex-col items-center justify-center gap-1.5 w-full">
                                         <label class="text-[11px] font-semibold text-toss-sub text-center tracking-tighter whitespace-nowrap w-full block">외경</label>
-                                        <input type="number" id="outerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                        <input type="text" id="outerDia" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                     </div>
                                     <div class="flex flex-col items-center justify-center gap-1.5 w-full">
                                         <label class="text-[11px] font-semibold text-toss-sub text-center tracking-tighter whitespace-nowrap w-full block">길이</label>
-                                        <input type="number" id="lengthVal" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                        <input type="text" id="lengthVal" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg p-0 text-center focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                     </div>
                                 </div>
                             </div>
@@ -286,11 +276,11 @@
                         <div class="grid grid-cols-2 gap-3 mt-3">
                             <div class="flex flex-col gap-2">
                                 <label class="text-[14px] font-semibold text-toss-sub">수축률 (%)</label>
-                                <input type="number" id="shrinkageRate" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                <input type="text" id="shrinkageRate" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[14px] font-semibold text-toss-sub">치수값</label>
-                                <input type="number" id="dimensionValue" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                <input type="text" id="dimensionValue" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                             </div>
                         </div>
 
@@ -302,7 +292,7 @@
                                 <button type="button" class="hardness-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="70">70</button>
                                 <button type="button" class="hardness-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="direct">직접입력</button>
                             </div>
-                            <input type="number" id="hardnessDirectInput" inputmode="decimal" placeholder="경도 직접 입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 mt-1 focus:bg-toss-blueLight focus:outline-none transition-colors" style="display: none;">
+                            <input type="text" id="hardnessDirectInput" inputmode="decimal" placeholder="경도 직접 입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 mt-1 focus:bg-toss-blueLight focus:outline-none transition-colors" style="display: none;">
                             <input type="hidden" id="hardnessValue" value="50">
                         </div>
                     </div>
@@ -325,11 +315,11 @@
                         <div class="grid grid-cols-2 gap-3">
                             <div class="flex flex-col gap-2">
                                 <label class="text-[14px] font-semibold text-toss-sub">온도 (℃)</label>
-                                <input type="number" id="extrudeTemp" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                <input type="text" id="extrudeTemp" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label class="text-[14px] font-semibold text-toss-sub">속도</label>
-                                <input type="number" id="extrudeSpeed" inputmode="numeric" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                <input type="text" id="extrudeSpeed" inputmode="numeric" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                             </div>
                         </div>
 
@@ -339,19 +329,19 @@
                             <div class="grid grid-cols-2 gap-3">
                                 <div class="flex flex-col gap-1.5">
                                     <label class="text-[12px] font-semibold text-toss-sub">투입속도</label>
-                                    <input type="number" id="feedSpeed" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                    <input type="text" id="feedSpeed" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                 </div>
                                 <div class="flex flex-col gap-1.5">
                                     <label class="text-[12px] font-semibold text-toss-sub">다량감속</label>
-                                    <input type="number" id="feedDecel" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                    <input type="text" id="feedDecel" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                 </div>
                                 <div class="flex flex-col gap-1.5">
                                     <label class="text-[12px] font-semibold text-toss-sub">역회전</label>
-                                    <input type="number" id="feedReverse" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                    <input type="text" id="feedReverse" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                 </div>
                                 <div class="flex flex-col gap-1.5">
                                     <label class="text-[12px] font-semibold text-toss-sub">싱글속도</label>
-                                    <input type="number" id="feedSingleSpeed" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
+                                    <input type="text" id="feedSingleSpeed" inputmode="decimal" placeholder="0" class="w-full h-[44px] bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-lg px-3 focus:bg-toss-blueLight focus:outline-none transition-colors text-[14px]">
                                 </div>
                             </div>
                         </div>
@@ -374,15 +364,15 @@
                                     <div class="grid grid-cols-2 gap-3">
                                         <div class="flex flex-col gap-2">
                                             <label class="text-[14px] font-semibold text-toss-sub">설정 길이 (mm)</label>
-                                            <input type="number" id="cutSetLength" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            <input type="text" id="cutSetLength" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2">
                                             <label class="text-[14px] font-semibold text-toss-sub">후진 속도</label>
-                                            <input type="number" id="cutBackSpeed" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            <input type="text" id="cutBackSpeed" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2">
                                             <label class="text-[14px] font-semibold text-toss-sub">롤러 누름</label>
-                                            <input type="number" id="cutRollerPress" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            <input type="text" id="cutRollerPress" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                         </div>
                                         <div class="flex flex-col gap-2">
                                             <label class="text-[14px] font-semibold text-toss-sub">뜨거울 때</label>
@@ -397,7 +387,7 @@
                                         <div class="flex flex-col gap-2 flex-1">
                                             <label class="text-[14px] font-semibold text-toss-sub">길이 (m)</label>
                                             <div class="relative">
-                                                <input type="number" id="rollLengthM" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 pr-10 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                                <input type="text" id="rollLengthM" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 pr-10 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                                 <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-toss-placeholder pointer-events-none">m</span>
                                             </div>
                                         </div>
@@ -405,39 +395,77 @@
                                     </div>
 
                                     <div class="flex flex-col gap-2" id="qtexEquipmentSection">
-                                        <label class="text-[14px] font-semibold text-toss-sub">사용 기기 (큐텍스)</label>
-                                        <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
-                                            <button type="button" class="qtex-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="큐텍스 1호">큐텍스 1호</button>
-                                            <button type="button" class="qtex-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="큐텍스 2호">큐텍스 2호</button>
+                                        <div class="flex items-center justify-between">
+                                            <label class="text-[14px] font-semibold text-toss-sub">사용 기기 (큐텍스)</label>
+                                            <span class="text-[12px] text-toss-placeholder">두 대 동시 사용 가능</span>
                                         </div>
-                                        <input type="hidden" id="qtexSelection" value="큐텍스 1호">
+                                        <div class="flex gap-2">
+                                            <button type="button" class="qtex-toggle-btn flex-1 py-3 text-[15px] font-semibold rounded-xl border-2 transition-all" data-value="큐텍스 1호">큐텍스 1호</button>
+                                            <button type="button" class="qtex-toggle-btn flex-1 py-3 text-[15px] font-semibold rounded-xl border-2 transition-all" data-value="큐텍스 2호">큐텍스 2호</button>
+                                        </div>
                                     </div>
 
-                                    <div class="grid grid-cols-2 gap-3 mt-3" id="jigDetailsGrid">
-                                        <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">지그크기</label>
-                                            <input type="text" id="jigSize" placeholder="입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
-                                        </div>
-                                        <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">설정길이</label>
-                                            <input type="number" id="jigLengthSetting" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
-                                        </div>
-                                        <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">가감속</label>
-                                            <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
-                                                <button type="button" class="jig-pos-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="상">상</button>
-                                                <button type="button" class="jig-pos-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="중">중</button>
-                                                <button type="button" class="jig-pos-btn flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="하">하</button>
+                                    <!-- 큐텍스 1호 상세 -->
+                                    <div id="qtex1Details" class="space-y-3 pt-3 border-t border-toss-border/50">
+                                        <p class="text-[13px] font-bold text-toss-blue">큐텍스 1호</p>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">지그크기</label>
+                                                <input type="text" id="jigSize1" placeholder="입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                             </div>
-                                            <input type="hidden" id="jigPosition" value="상">
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">설정길이</label>
+                                                <input type="text" id="jigLengthSetting1" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">가감속</label>
+                                                <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
+                                                    <button type="button" class="jig-pos-btn-1 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="상">상</button>
+                                                    <button type="button" class="jig-pos-btn-1 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="중">중</button>
+                                                    <button type="button" class="jig-pos-btn-1 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="하">하</button>
+                                                </div>
+                                                <input type="hidden" id="jigPosition1" value="상">
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">피딩속도</label>
+                                                <input type="text" id="jigPercent1" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
+                                            <div class="flex flex-col gap-2 col-span-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">하강위치</label>
+                                                <input type="text" id="jigPress1" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
                                         </div>
-                                        <div class="flex flex-col gap-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">피딩속도</label>
-                                            <input type="number" id="jigPercent" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
-                                        </div>
-                                        <div class="flex flex-col gap-2 col-span-2">
-                                            <label class="text-[14px] font-semibold text-toss-sub">하강위치</label>
-                                            <input type="number" id="jigPress" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                    </div>
+
+                                    <!-- 큐텍스 2호 상세 -->
+                                    <div id="qtex2Details" class="space-y-3 pt-3 border-t border-toss-border/50 hidden">
+                                        <p class="text-[13px] font-bold text-toss-blue">큐텍스 2호</p>
+                                        <div class="grid grid-cols-2 gap-3">
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">지그크기</label>
+                                                <input type="text" id="jigSize2" placeholder="입력" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">설정길이</label>
+                                                <input type="text" id="jigLengthSetting2" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">가감속</label>
+                                                <div class="flex bg-toss-bg p-1 rounded-xl gap-1">
+                                                    <button type="button" class="jig-pos-btn-2 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-blue bg-white shadow-sm transition-all" data-value="상">상</button>
+                                                    <button type="button" class="jig-pos-btn-2 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="중">중</button>
+                                                    <button type="button" class="jig-pos-btn-2 flex-1 py-3 text-[15px] font-semibold rounded-[10px] text-toss-sub transition-all" data-value="하">하</button>
+                                                </div>
+                                                <input type="hidden" id="jigPosition2" value="상">
+                                            </div>
+                                            <div class="flex flex-col gap-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">피딩속도</label>
+                                                <input type="text" id="jigPercent2" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
+                                            <div class="flex flex-col gap-2 col-span-2">
+                                                <label class="text-[14px] font-semibold text-toss-sub">하강위치</label>
+                                                <input type="text" id="jigPress2" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -447,7 +475,7 @@
                                     <div class="flex flex-col gap-2">
                                         <label class="text-[14px] font-semibold text-toss-sub">자른 길이 (mm)</label>
                                         <div class="relative">
-                                            <input type="number" id="manualCutLength" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 pr-10 focus:bg-toss-blueLight focus:outline-none transition-colors">
+                                            <input type="text" id="manualCutLength" inputmode="decimal" placeholder="0" class="w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-4 pr-10 focus:bg-toss-blueLight focus:outline-none transition-colors">
                                             <span class="absolute right-4 top-1/2 -translate-y-1/2 text-[14px] text-toss-placeholder pointer-events-none">mm</span>
                                         </div>
                                     </div>
@@ -716,8 +744,8 @@
                                 <span class="text-[12px] font-bold text-toss-sub">${log.type}</span>
                                 <span class="text-[12px] text-toss-placeholder">${formatTime(log.createdAt)}</span>
                             </div>
-                            <p class="text-[15px] font-semibold text-toss-text truncate">${log.title || ''}</p>
-                            <p class="text-[13px] text-toss-sub truncate">${log.subtitle || ''}</p>
+                            <p class="text-[15px] font-semibold text-toss-text truncate">${getLogDisplayTitle(log) || ''}</p>
+                            <p class="text-[13px] text-toss-sub truncate">${getLogDisplaySubtitle(log) || ''}</p>
                         </div>
                         <div class="flex items-center gap-2 flex-shrink-0">
                             <button type="button" class="trash-restore-btn text-toss-blue bg-toss-blueLight text-[12px] font-semibold px-3 py-2 rounded-[10px] active:opacity-70 transition-opacity" data-id="${log.id}">복원</button>
@@ -919,6 +947,7 @@
                         </div>
                         <div class="flex gap-2">
                             <input type="text" id="newMaterialInput" placeholder="원자재명 입력" class="flex-1 min-w-0 bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-3.5 focus:outline-none focus:bg-toss-blueLight transition-colors">
+                            <button id="materialEditCancelBtn" class="hidden bg-toss-bg text-toss-sub font-semibold px-4 rounded-xl whitespace-nowrap active:bg-toss-border transition-colors">취소</button>
                             <button id="addMaterialBtn" class="bg-toss-blue text-white font-semibold px-5 rounded-xl whitespace-nowrap active:bg-blue-600 transition-colors">추가</button>
                         </div>
                     </div>
@@ -969,6 +998,32 @@
             updatePurposeTabStyles();
 
             const newMaterialInput = overlay.querySelector('#newMaterialInput');
+            const addMaterialBtn = overlay.querySelector('#addMaterialBtn');
+            const editCancelBtn = overlay.querySelector('#materialEditCancelBtn');
+            let editingMaterialId = null;
+            const enterEditMode = (row) => {
+                editingMaterialId = row.id;
+                newMaterialInput.value = row.name;
+                newMaterialInput.focus();
+                const purpose = row.purpose;
+                if (MATERIAL_PURPOSES.includes(purpose)) {
+                    selectedPurposeTab = purpose;
+                } else {
+                    selectedPurposeTab = '기타';
+                    purposeCustomInput.value = purpose;
+                }
+                updatePurposeTabStyles();
+                addMaterialBtn.textContent = '수정 완료';
+                editCancelBtn.classList.remove('hidden');
+            };
+            const exitEditMode = () => {
+                editingMaterialId = null;
+                newMaterialInput.value = '';
+                addMaterialBtn.textContent = '추가';
+                editCancelBtn.classList.add('hidden');
+            };
+            editCancelBtn.addEventListener('click', exitEditMode);
+
             const listArea = overlay.querySelector('#materialListArea');
             const renderMaterialList = () => {
                 const items = loadMaterialsFull().filter(row => row.brand === selectedBrand);
@@ -997,16 +1052,11 @@
                             renderMaterialList();
                             return;
                         }
-                        newMaterialInput.value = row.getAttribute('data-name');
-                        newMaterialInput.focus();
-                        const purpose = row.getAttribute('data-purpose');
-                        if (MATERIAL_PURPOSES.includes(purpose)) {
-                            selectedPurposeTab = purpose;
-                        } else {
-                            selectedPurposeTab = '기타';
-                            purposeCustomInput.value = purpose;
-                        }
-                        updatePurposeTabStyles();
+                        enterEditMode({
+                            id: row.getAttribute('data-id'),
+                            name: row.getAttribute('data-name'),
+                            purpose: row.getAttribute('data-purpose')
+                        });
                     });
                 });
                 listArea.querySelectorAll('.material-del-btn').forEach(btn => {
@@ -1016,6 +1066,7 @@
                         btn.disabled = true;
                         const { error } = await sb.from('materials').delete().eq('id', id);
                         if (error) { alert('원자재 삭제 실패: ' + error.message); btn.disabled = false; return; }
+                        if (editingMaterialId === id) exitEditMode();
                         await refreshMaterialsCache();
                         renderMaterialList();
                         refreshBlendChips('material');
@@ -1027,35 +1078,35 @@
                 b.addEventListener('click', () => {
                     selectedBrand = b.getAttribute('data-brand');
                     updateBrandTabStyles();
+                    exitEditMode();
                     renderMaterialList();
                 });
             });
             updateBrandTabStyles();
             renderMaterialList();
 
-            const addMaterialBtn = overlay.querySelector('#addMaterialBtn');
             const addMaterial = async () => {
                 const name = newMaterialInput.value.trim();
                 if (!name) return;
                 const purpose = getSelectedPurpose();
                 if (!purpose) { alert('용도를 입력해주세요.'); purposeCustomInput.focus(); return; }
                 addMaterialBtn.disabled = true;
-                const { error } = await sb.from('materials').insert({ name, brand: selectedBrand, purpose });
+                const { error } = editingMaterialId
+                    ? await sb.from('materials').update({ name, brand: selectedBrand, purpose }).eq('id', editingMaterialId)
+                    : await sb.from('materials').insert({ name, brand: selectedBrand, purpose });
                 addMaterialBtn.disabled = false;
                 if (error) {
                     if (error.code === '23505') {
-                        newMaterialInput.value = '';
+                        alert('이미 등록된 원자재명입니다.');
                     } else {
-                        alert('원자재 등록 실패: ' + error.message);
-                        return;
+                        alert(`원자재 ${editingMaterialId ? '수정' : '등록'} 실패: ` + error.message);
                     }
-                } else {
-                    newMaterialInput.value = '';
+                    return;
                 }
+                exitEditMode();
                 await refreshMaterialsCache();
                 renderMaterialList();
                 refreshBlendChips('material');
-                newMaterialInput.focus();
             };
             addMaterialBtn.addEventListener('click', addMaterial);
             newMaterialInput.addEventListener('keydown', (e) => {
@@ -1622,7 +1673,7 @@
                     <div class="flex items-center gap-3">
                         <div class="flex-1 bg-toss-bg text-toss-text rounded-xl px-4 py-3.5 text-[14px] truncate">${name}</div>
                         <div class="relative w-[110px] flex-shrink-0">
-                            <input type="number" inputmode="decimal" placeholder="0" class="blend-value-input w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-3 pr-8 text-[14px] text-right focus:bg-toss-blueLight focus:outline-none transition-colors" data-name="${name}" value="${state.values[name] || ''}">
+                            <input type="text" inputmode="decimal" placeholder="0" class="blend-value-input w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-3 pr-8 text-[14px] text-right focus:bg-toss-blueLight focus:outline-none transition-colors" data-name="${name}" value="${state.values[name] || ''}">
                             <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[13px] text-toss-placeholder pointer-events-none">kg</span>
                         </div>
                     </div>
@@ -1634,7 +1685,7 @@
                         <div class="flex items-center gap-3">
                             <div class="flex-1 bg-toss-bg text-toss-text rounded-xl px-4 py-3.5 text-[14px] truncate">${name}</div>
                             <div class="relative w-[110px] flex-shrink-0">
-                                <input type="number" inputmode="decimal" placeholder="0" class="blend-value-input w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-3 pr-10 text-[14px] text-right focus:bg-toss-blueLight focus:outline-none transition-colors" data-name="${name}" value="${state.values[name] || ''}">
+                                <input type="text" inputmode="decimal" placeholder="0" class="blend-value-input w-full bg-toss-bg text-toss-text placeholder-toss-placeholder rounded-xl p-3 pr-10 text-[14px] text-right focus:bg-toss-blueLight focus:outline-none transition-colors" data-name="${name}" value="${state.values[name] || ''}">
                                 <span class="absolute right-3 top-1/2 -translate-y-1/2 text-[12px] text-toss-placeholder pointer-events-none">g/kg</span>
                             </div>
                         </div>
@@ -1777,6 +1828,29 @@
             renderList();
         }
 
+        /* 배합 기록은 목록에서도 압출과 동일하게 업체명+제품명을 제목으로 보여준다.
+           예전에 저장된 기록(원료명이 제목으로 들어간 것)도 detail에 업체명/제품명이 있으면 즉시 이 형식으로 표시된다. */
+        function getLogDisplayTitle(log) {
+            if (log.type === '배합') {
+                const d = log.detail || {};
+                const parts = [d.업체명, d.제품명].filter(Boolean);
+                if (parts.length > 0) return parts.join(' ');
+            }
+            return log.title;
+        }
+
+        /* 배합 기록의 부제목은 원료 배합 정보(원료명 + 총중량)를 보여준다.
+           저장된 subtitle이 예전 형식("총 OOkg"만 있는 경우)이어도 detail.원료로 즉시 다시 조합해 보여준다. */
+        function getLogDisplaySubtitle(log) {
+            if (log.type === '배합') {
+                const d = log.detail || {};
+                const materialNames = (d.원료 || []).map(m => m.이름).filter(Boolean);
+                const weightPart = `총 ${d.총원료중량 ?? 0}kg`;
+                return materialNames.length > 0 ? `${materialNames.join(' + ')} · ${weightPart}` : weightPart;
+            }
+            return log.subtitle;
+        }
+
         function renderList() {
             const logList = document.getElementById('logList');
             const logs = loadLogs().slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
@@ -1840,8 +1914,8 @@
                     </div>
                     <div class="flex justify-between items-center gap-4">
                         <div class="flex-1">
-                            <h3 class="text-[17px] font-bold text-toss-text mb-1 tracking-tight">${log.title}</h3>
-                            <p class="text-[14px] text-toss-sub">${log.subtitle}</p>
+                            <h3 class="text-[17px] font-bold text-toss-text mb-1 tracking-tight">${getLogDisplayTitle(log)}</h3>
+                            <p class="text-[14px] text-toss-sub">${getLogDisplaySubtitle(log)}</p>
                         </div>
                         <div class="w-[60px] h-[60px] rounded-[14px] bg-toss-bg border border-toss-border overflow-hidden flex-shrink-0">
                             ${thumb}
@@ -2160,17 +2234,24 @@
                             </div>
                         `;
                     } else if (p.type === '롤 작업') {
-                        sections += detailField('사용 기기 (큐텍스)', p.큐텍스);
-                        sections += `
-                            <div class="grid grid-cols-2 gap-3 mt-3">
-                                ${detailField('지그크기', p.지그크기)}
-                                ${detailField('설정길이', p.길이설정)}
-                                ${detailField('가감속', p.위치)}
-                                ${detailField('피딩속도', p.퍼센트)}
-                            </div>
-                            <div class="grid grid-cols-1 gap-3">${detailField('하강위치', p.누름)}</div>
-                            <div class="grid grid-cols-1 gap-3">${detailField('길이 (m)', p.길이m)}</div>
-                        `;
+                        /* 기기목록(신규, 두 대 동시 지원)이 없으면 예전 단일 큐텍스 기록 형식을 그대로 보여준다 */
+                        const machines = p.기기목록 || (p.큐텍스 ? [{ 기기: p.큐텍스, 지그크기: p.지그크기, 길이설정: p.길이설정, 위치: p.위치, 퍼센트: p.퍼센트, 누름: p.누름 }] : []);
+                        if (machines.length === 0) {
+                            sections += `<p class="text-[14px] text-toss-placeholder">사용 기기 없음</p>`;
+                        }
+                        machines.forEach(m => {
+                            sections += `<h3 class="text-[14px] font-bold text-toss-blue">${esc(m.기기)}</h3>`;
+                            sections += `
+                                <div class="grid grid-cols-2 gap-3 mt-2">
+                                    ${detailField('지그크기', m.지그크기)}
+                                    ${detailField('설정길이', m.길이설정)}
+                                    ${detailField('가감속', m.위치)}
+                                    ${detailField('피딩속도', m.퍼센트)}
+                                </div>
+                                <div class="grid grid-cols-1 gap-3">${detailField('하강위치', m.누름)}</div>
+                            `;
+                        });
+                        sections += `<div class="grid grid-cols-1 gap-3">${detailField('길이 (m)', p.길이m)}</div>`;
                     } else if (p.type === '직접 잘라요') {
                         sections += detailField('자른 길이 (mm)', p.자른길이);
                     }
@@ -2243,8 +2324,8 @@
                         </div>
                     </div>
                     <div class="overflow-y-auto px-5 pb-8 pt-2 hide-scrollbar">
-                        <h3 class="text-[19px] font-bold text-toss-text mt-3">${log.title}</h3>
-                        <p class="text-[14px] text-toss-sub mt-1 mb-2">${log.subtitle}</p>
+                        <h3 class="text-[19px] font-bold text-toss-text mt-3">${getLogDisplayTitle(log)}</h3>
+                        <p class="text-[14px] text-toss-sub mt-1 mb-2">${getLogDisplaySubtitle(log)}</p>
 
                         ${buildDetailSections(log)}
 
@@ -2460,51 +2541,67 @@
             });
         });
 
-        const jigPosBtns = document.querySelectorAll('.jig-pos-btn');
-        const jigPositionInput = document.getElementById('jigPosition');
-        jigPosBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                jigPosBtns.forEach(t => {
-                    t.classList.remove('text-toss-blue', 'bg-white', 'shadow-sm');
-                    t.classList.add('text-toss-sub');
+        function wireJigPosBtns(className, hiddenInputId) {
+            const btns = document.querySelectorAll('.' + className);
+            const input = document.getElementById(hiddenInputId);
+            btns.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    btns.forEach(t => {
+                        t.classList.remove('text-toss-blue', 'bg-white', 'shadow-sm');
+                        t.classList.add('text-toss-sub');
+                    });
+                    e.target.classList.remove('text-toss-sub');
+                    e.target.classList.add('text-toss-blue', 'bg-white', 'shadow-sm');
+                    if (input) input.value = e.target.getAttribute('data-value');
                 });
-                e.target.classList.remove('text-toss-sub');
-                e.target.classList.add('text-toss-blue', 'bg-white', 'shadow-sm');
-                if(jigPositionInput) jigPositionInput.value = e.target.getAttribute('data-value');
             });
-        });
+            return btns;
+        }
+        wireJigPosBtns('jig-pos-btn-1', 'jigPosition1');
+        wireJigPosBtns('jig-pos-btn-2', 'jigPosition2');
 
-        const qtexBtns = document.querySelectorAll('.qtex-btn');
-        const qtexSelectionInput = document.getElementById('qtexSelection');
-        qtexBtns.forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                qtexBtns.forEach(t => {
-                    t.classList.remove('text-toss-blue', 'bg-white', 'shadow-sm');
-                    t.classList.add('text-toss-sub');
-                });
-                e.target.classList.remove('text-toss-sub');
-                e.target.classList.add('text-toss-blue', 'bg-white', 'shadow-sm');
-                if(qtexSelectionInput) qtexSelectionInput.value = e.target.getAttribute('data-value');
+        let noEquipmentUsed = false;
+
+        /* 큐텍스 1호/2호는 동시에 두 대를 함께 쓸 수 있어 중복 선택(토글) 가능한 방식으로 동작한다.
+           각 기기별로 별도의 상세 입력 블록(qtex1Details/qtex2Details)을 갖고,
+           선택된 기기의 블록만 펼쳐서 데이터를 따로 기록할 수 있게 한다. */
+        const qtexToggleBtns = document.querySelectorAll('.qtex-toggle-btn');
+        const qtex1Details = document.getElementById('qtex1Details');
+        const qtex2Details = document.getElementById('qtex2Details');
+        let qtex1Selected = true;
+        let qtex2Selected = false;
+        function updateQtexToggleUI() {
+            qtexToggleBtns.forEach(btn => {
+                const value = btn.getAttribute('data-value');
+                const active = (value === '큐텍스 1호' && qtex1Selected) || (value === '큐텍스 2호' && qtex2Selected);
+                btn.classList.toggle('border-toss-blue', active);
+                btn.classList.toggle('bg-toss-blueLight', active);
+                btn.classList.toggle('text-toss-blue', active);
+                btn.classList.toggle('border-toss-border', !active);
+                btn.classList.toggle('text-toss-sub', !active);
+            });
+            qtex1Details.classList.toggle('hidden', !qtex1Selected || noEquipmentUsed);
+            qtex2Details.classList.toggle('hidden', !qtex2Selected || noEquipmentUsed);
+        }
+        qtexToggleBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const value = btn.getAttribute('data-value');
+                if (value === '큐텍스 1호') qtex1Selected = !qtex1Selected;
+                else qtex2Selected = !qtex2Selected;
+                updateQtexToggleUI();
             });
         });
+        updateQtexToggleUI();
 
         const noEquipmentToggleBtn = document.getElementById('noEquipmentToggleBtn');
         const qtexEquipmentSection = document.getElementById('qtexEquipmentSection');
-        const jigDetailsGrid = document.getElementById('jigDetailsGrid');
-        let noEquipmentUsed = false;
         function updateNoEquipmentUI() {
             qtexEquipmentSection.classList.toggle('hidden', noEquipmentUsed);
-            jigDetailsGrid.classList.toggle('hidden', noEquipmentUsed);
             noEquipmentToggleBtn.classList.toggle('bg-toss-text', noEquipmentUsed);
             noEquipmentToggleBtn.classList.toggle('text-white', noEquipmentUsed);
             noEquipmentToggleBtn.classList.toggle('border-toss-border', !noEquipmentUsed);
             noEquipmentToggleBtn.classList.toggle('text-toss-sub', !noEquipmentUsed);
-            if (noEquipmentUsed) {
-                qtexSelectionInput.value = '';
-            } else if (!qtexSelectionInput.value) {
-                const activeQtexBtn = document.querySelector('.qtex-btn.bg-white') || qtexBtns[0];
-                qtexSelectionInput.value = activeQtexBtn ? activeQtexBtn.getAttribute('data-value') : '큐텍스 1호';
-            }
+            updateQtexToggleUI();
         }
         noEquipmentToggleBtn.addEventListener('click', () => {
             noEquipmentUsed = !noEquipmentUsed;
@@ -2615,7 +2712,9 @@
              'lengthVal', 'shrinkageRate', 'dimensionValue', 'extrudeTemp', 'extrudeSpeed',
              'feedSpeed', 'feedDecel', 'feedReverse', 'feedSingleSpeed',
              'cutSetLength', 'cutBackSpeed', 'cutRollerPress', 'cutHotHandling',
-             'jigSize', 'jigLengthSetting', 'jigPercent', 'jigPress', 'rollLengthM', 'manualCutLength'].forEach(id => {
+             'jigSize1', 'jigLengthSetting1', 'jigPercent1', 'jigPress1',
+             'jigSize2', 'jigLengthSetting2', 'jigPercent2', 'jigPress2',
+             'rollLengthM', 'manualCutLength'].forEach(id => {
                 const el = document.getElementById(id);
                 if (el) el.value = '';
             });
@@ -2627,12 +2726,14 @@
                 ['.hardness-btn', '50'],
                 ['.extruder-segment-btn', '압출기 1호'],
                 ['.post-segment-btn', '바로커팅'],
-                ['.qtex-btn', '큐텍스 1호'],
-                ['.jig-pos-btn', '상']
+                ['.jig-pos-btn-1', '상'],
+                ['.jig-pos-btn-2', '상']
             ].forEach(([selector, value]) => {
                 const btn = document.querySelector(`${selector}[data-value="${value}"]`);
                 if (btn) btn.click();
             });
+            qtex1Selected = true;
+            qtex2Selected = false;
             noEquipmentUsed = false;
             updateNoEquipmentUI();
 
@@ -2698,14 +2799,29 @@
                     setVal('cutRollerPress', post.롤러누름);
                     setVal('cutHotHandling', post.뜨거울때);
                 } else if (postType === '롤 작업') {
-                    selectSegment('.qtex-btn', post.큐텍스 || '큐텍스 1호');
-                    noEquipmentUsed = !post.큐텍스;
+                    /* 기기목록(신규, 두 대 동시 지원)이 없으면 예전 단일 큐텍스 기록 형식을 그대로 읽어온다 */
+                    const machines = post.기기목록 || (post.큐텍스 ? [{ 기기: post.큐텍스, 지그크기: post.지그크기, 길이설정: post.길이설정, 위치: post.위치, 퍼센트: post.퍼센트, 누름: post.누름 }] : []);
+                    qtex1Selected = false;
+                    qtex2Selected = false;
+                    machines.forEach(m => {
+                        if (m.기기 === '큐텍스 1호') {
+                            qtex1Selected = true;
+                            setVal('jigSize1', m.지그크기);
+                            setVal('jigLengthSetting1', m.길이설정);
+                            selectSegment('.jig-pos-btn-1', m.위치 || '상');
+                            setVal('jigPercent1', m.퍼센트);
+                            setVal('jigPress1', m.누름);
+                        } else if (m.기기 === '큐텍스 2호') {
+                            qtex2Selected = true;
+                            setVal('jigSize2', m.지그크기);
+                            setVal('jigLengthSetting2', m.길이설정);
+                            selectSegment('.jig-pos-btn-2', m.위치 || '상');
+                            setVal('jigPercent2', m.퍼센트);
+                            setVal('jigPress2', m.누름);
+                        }
+                    });
+                    noEquipmentUsed = machines.length === 0;
                     updateNoEquipmentUI();
-                    setVal('jigSize', post.지그크기);
-                    setVal('jigLengthSetting', post.길이설정);
-                    selectSegment('.jig-pos-btn', post.위치 || '상');
-                    setVal('jigPercent', post.퍼센트);
-                    setVal('jigPress', post.누름);
                     setVal('rollLengthM', post.길이m);
                 } else if (postType === '직접 잘라요') {
                     setVal('manualCutLength', post.자른길이);
@@ -2787,13 +2903,29 @@
                         뜨거울때: fieldVal('cutHotHandling')
                     });
                 } else if (postProcessStep === '롤 작업') {
+                    const 기기목록 = [];
+                    if (!noEquipmentUsed && qtex1Selected) {
+                        기기목록.push({
+                            기기: '큐텍스 1호',
+                            지그크기: fieldVal('jigSize1'),
+                            길이설정: fieldVal('jigLengthSetting1'),
+                            위치: document.getElementById('jigPosition1').value,
+                            퍼센트: fieldVal('jigPercent1'),
+                            누름: fieldVal('jigPress1')
+                        });
+                    }
+                    if (!noEquipmentUsed && qtex2Selected) {
+                        기기목록.push({
+                            기기: '큐텍스 2호',
+                            지그크기: fieldVal('jigSize2'),
+                            길이설정: fieldVal('jigLengthSetting2'),
+                            위치: document.getElementById('jigPosition2').value,
+                            퍼센트: fieldVal('jigPercent2'),
+                            누름: fieldVal('jigPress2')
+                        });
+                    }
                     Object.assign(postDetail, {
-                        큐텍스: document.getElementById('qtexSelection').value,
-                        지그크기: fieldVal('jigSize'),
-                        길이설정: fieldVal('jigLengthSetting'),
-                        위치: document.getElementById('jigPosition').value,
-                        퍼센트: fieldVal('jigPercent'),
-                        누름: fieldVal('jigPress'),
+                        기기목록,
                         길이m: fieldVal('rollLengthM')
                     });
                 } else if (postProcessStep === '직접 잘라요') {
@@ -2831,6 +2963,8 @@
                     } : null
                 };
             } else if (processType === '배합') {
+                const mixCompany = fieldVal('mixCompanyName');
+                const mixProduct = fieldVal('mixProductName');
                 const materialNames = getBlendItemNames('material');
                 const additiveNames = getBlendItemNames('additive');
                 const totalKg = getTotalMaterialKg();
@@ -2843,12 +2977,13 @@
                     return { 이름: name, 투입비율: dose, 예상투입량: computed };
                 });
 
-                title = materialNames.length > 0 ? materialNames.join(' + ') : '배합 작업';
-                subtitle = `총 ${totalKg}kg`;
+                const mixTitleParts = [mixCompany, mixProduct].filter(Boolean);
+                title = mixTitleParts.length > 0 ? mixTitleParts.join(' ') : (materialNames.length > 0 ? materialNames.join(' + ') : '배합 작업');
+                subtitle = materialNames.length > 0 ? `${materialNames.join(' + ')} · 총 ${totalKg}kg` : `총 ${totalKg}kg`;
 
                 detail = {
-                    업체명: fieldVal('mixCompanyName'),
-                    제품명: fieldVal('mixProductName'),
+                    업체명: mixCompany,
+                    제품명: mixProduct,
                     원료: materials,
                     총원료중량: totalKg,
                     첨가제: additives
